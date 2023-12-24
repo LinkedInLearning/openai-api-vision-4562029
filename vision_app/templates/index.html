@@ -121,8 +121,37 @@ label[for="fileInput"]:active {
 .bottom-nav input[type="submit"] {
     margin: 0 10px;
 }
+
+
+#response {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* transparent background */
+    /* color: same as buttons; */
+    color: #3498db;
+}
 </style>
     
+   
+</head>
+<body>
+    <div class="container">
+        <div class="image-overlay">
+            <img id="preview" alt="Preview" />
+            <div id="response" style="display: none;"></div>
+        </div> 
+    </div>
+    <nav class="bottom-nav">
+        <form onsubmit="submitForm(event)">
+            <input type="file" id="fileInput" required onchange="previewFile()">
+            <label for="fileInput">Choose a file</label>
+            <span id="file-name"></span>
+            <input type="submit" value="Upload">
+        </form>
+    </nav>
     <script>
         function submitForm(event) {
             event.preventDefault();
@@ -137,7 +166,9 @@ label[for="fileInput"]:active {
             })
             .then(response => response.text())
             .then(data => {
-                document.getElementById('response').innerText = data;
+                const responseEl = document.getElementById('response');
+                response.innerText = data;
+                response.style.display = 'block';
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -154,19 +185,5 @@ label[for="fileInput"]:active {
             previewImg.style.display = 'block';
         }
     </script>
-</head>
-<body>
-    <div class="container">
-        <img id="preview" alt="Preview" />
-        <div id="response"></div>
-    </div>
-    <nav class="bottom-nav">
-        <form onsubmit="submitForm(event)">
-            <input type="file" id="fileInput" required onchange="previewFile()">
-            <label for="fileInput">Choose a file</label>
-            <span id="file-name"></span>
-            <input type="submit" value="Upload">
-        </form>
-    </nav>
 </body>
 </html>
