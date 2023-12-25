@@ -1,3 +1,4 @@
+import json
 from io import BytesIO
 import base64
 
@@ -20,7 +21,14 @@ def vision():
     if "file" not in request.files:
         return "No file part in the request", 400
     file = request.files["file"]
-
+    item_list = json.loads(request.form.get("userItems", "[]"))
+    if not item_list:
+        return jsonify(
+            ["Please enter items that are supposed to be in the refrigirator"]
+        )
+    user_items = ", ".join(item_list)
+    prompt = f'Which of the following grocery items are not present? {user_items}. Response should be a list of items that are missing ["missing item1", "missing item2", "missing item3", "missing item4", "missing item5"]. if everything is there response should be ["nothing missing"]'
+    print(prompt)
     file_content = file.read()
     base64_image = base64.b64encode(file_content).decode("utf-8")
     response = client.chat.completions.create(
@@ -29,10 +37,7 @@ def vision():
             {
                 "role": "user",
                 "content": [
-                    {
-                        "type": "text",
-                        "text": 'My refrigirator should have. Soy Milk, Soy Cheese, fruits, vigetable and chocolate pudding. What\'s missing? response should be a list of items that are missing ["missing item1", "missing item2", "missing item3", "missing item4", "missing item5"]',
-                    },
+                    {"type": "text", "text": prompt},
                     {
                         "type": "image_url",
                         "image_url": {
@@ -45,6 +50,7 @@ def vision():
         max_tokens=300,
     )
     choice = response.choices[0].message.content
+    print(choice)
     return choice
 
 
