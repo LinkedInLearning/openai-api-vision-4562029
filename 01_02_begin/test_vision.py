@@ -19,7 +19,7 @@ response = client.chat.completions.create(
                 {
                     "type": "image_url",
                     "image_url": {
-                        "url": IMAGE_URL,
+                        "url": f"data:image/jpeg;base64,{base64_image}",
                     },
                 },
             ],
