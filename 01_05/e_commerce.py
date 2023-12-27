@@ -3,6 +3,10 @@ from openai import OpenAI
 
 client = OpenAI()
 
+PROMPT = """
+
+"""
+
 response = client.chat.completions.create(
     model="gpt-4-vision-preview",
     messages=[
@@ -11,12 +15,30 @@ response = client.chat.completions.create(
             "content": [
                 {
                     "type": "text",
-                    "text": "Here is a mug. Create an short, appealing description for it for an e-commerce website. Output should only contain text.",
+                    "text": PROMPT,
                 },
                 {
                     "type": "image_url",
                     "image_url": {
-                        "url": "https://binaryville.com/images/products/rex-microcontrollers-mug-black.jpg",
+                        "url": "https://www.binaryville.com/images/products/fred-0s1s-mug-black.jpg",
+                    },
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": "https://www.binaryville.com/images/products/dolores-compute-mug-black.jpg",
+                    },
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": "https://www.binaryville.com/images/products/bubbles-gumball-mug-black.jpg",
+                    },
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": "https://www.binaryville.com/images/products/rex-microcontrollers-mug-black.jpg",
                     },
                 },
             ],
