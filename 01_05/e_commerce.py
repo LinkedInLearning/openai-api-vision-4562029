@@ -3,7 +3,7 @@ from openai import OpenAI
 
 client = OpenAI()
 
-PROMPT = """You are a e-commerce marketing expert. Here are some mugs. 
+PROMPT = """You are an e-commerce marketing expert. Here are some mugs. 
 Create short, appealing descriptions for them for our e-commerce website. 
 Output should only contain a JSON list of of strings containing descriptions.
 """
