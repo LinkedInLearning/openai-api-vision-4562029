@@ -3,8 +3,9 @@ from openai import OpenAI
 
 client = OpenAI()
 
-PROMPT = """
-
+PROMPT = """You are an e-commerce marketing expert. Here are mugs. 
+Create an short, appealing description for it for our e-commerce website. 
+Output should only contain JSON list of of strings containing descriptions.
 """
 
 response = client.chat.completions.create(
