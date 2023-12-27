@@ -4,7 +4,7 @@ from openai import OpenAI
 
 client = OpenAI()
 
-IMAGE_URL =  "https://binaryville.com/images/products/rex-microcontrollers-mug-black.jpg",
+IMAGE_URL =  "https://binaryville.com/images/products/rex-microcontrollers-mug-black.jpg"
 
 with open("rex-microcontrollers-mug-black.jpg", "rb") as f:
     file_content = f.read()
