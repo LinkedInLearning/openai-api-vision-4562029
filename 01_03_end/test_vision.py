@@ -18,7 +18,7 @@ response = client.chat.completions.create(
             "content": [
                 {
                     "type": "text",
-                    "text": "What colors are used in this mug?",
+                    "text": 'I need to know if this matches my mug-set. What colors are used in this mug? Output should be JSON list: ["color1", "color2"]',
                 },
                 {
                     "type": "image_url",
