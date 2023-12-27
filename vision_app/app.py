@@ -1,7 +1,7 @@
-from io import BytesIO
 import base64
+from io import BytesIO
 
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, jsonify, render_template, request
 from openai import OpenAI
 
 app = Flask(__name__)
