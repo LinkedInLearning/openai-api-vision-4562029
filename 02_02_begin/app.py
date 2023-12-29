@@ -22,8 +22,8 @@ def vision():
         return "No file part in the request", 400
     file = request.files["file"]
     prompt = ""
-    # core logic
     file_content = file.read()
+    # core logic
     return jsonify(["item1", "item2", "item3"])
 
 
