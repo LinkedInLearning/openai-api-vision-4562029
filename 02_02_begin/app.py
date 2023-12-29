@@ -24,10 +24,7 @@ def vision():
     prompt = ""
     # core logic
     file_content = file.read()
-    return jsonify(
-            ["item1", "item2", "item3"]
-        )
-
+    return jsonify(["item1", "item2", "item3"])
 
 
 if __name__ == "__main__":
