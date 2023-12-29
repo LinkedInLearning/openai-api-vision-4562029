@@ -272,14 +272,16 @@
             <input type="text" id="grocery-input" placeholder="Enter grocery item">
             <button onclick="addItem()" class="add-button">Add</button>
         </div>
+        
         <div class="image-overlay">
             <img id="preview" alt="Preview" />
-            <div id="response" style="display: none;">
-                <ul id="items" style="display: none;">
-                </ul>
-            </div>
-            <div id="scan" style="display: none;"></div>
+            <div id="response" style="display: none;"></div>
+            <ul id="items" style="display: none;">
+            </ul>
         </div>
+            <div id="scan" style="display: none;"></div>
+        
+    </div>
     </div>
     <nav class="bottom-nav">
         <form onsubmit="submitForm(event)">
@@ -295,6 +297,7 @@
             const responseEl = document.getElementById('response');
             scanEl.style.display = 'block';
             response.style.display = 'block';
+            responseEl.style.height = document.body.scrollHeight + 'px';
             event.preventDefault();
             const fileInput = document.getElementById('fileInput');
             const file = fileInput.files[0];
@@ -364,6 +367,16 @@
             }
             listItem.remove();
         }
+        document.addEventListener('click', function (event) {
+            const itemsElement = document.querySelector('#items');
+            const responseElement = document.querySelector('#response');
+            const isClickInside = itemsElement.contains(event.target);
+
+            if (!isClickInside) {
+                responseElement.style.display = 'none';
+                itemsElement.style.display = 'none';
+            }
+        });
     </script>
 </body>
 
