@@ -34,3 +34,4 @@ try:
     click.secho(response.choices[0].message.content, fg="cyan")
 except:
     print(response.choices[0].message.content)
+
