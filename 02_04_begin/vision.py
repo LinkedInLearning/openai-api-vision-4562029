@@ -5,7 +5,7 @@ from openai import OpenAI
 client = OpenAI()
 
 
-with open("refrigirator.png", "rb") as f:
+with open("refrigerator.png", "rb") as f:
     file_content = f.read()
     base64_image = base64.b64encode(file_content).decode("utf-8")
 
