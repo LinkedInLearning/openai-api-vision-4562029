@@ -1,6 +1,6 @@
 import base64
 import json
-
+from io import BytesIO
 
 from flask import Flask, jsonify, render_template, request
 from openai import OpenAI
