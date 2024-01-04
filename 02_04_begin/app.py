@@ -24,7 +24,7 @@ def vision():
     item_list = json.loads(request.form.get("userItems", "[]"))
     if not item_list:
         return jsonify(
-            ["Please enter items that are supposed to be in the refrigirator"]
+            ["Please enter items that are supposed to be in the refrigerator"]
         )
     prompt = f""""""
     print(prompt)
