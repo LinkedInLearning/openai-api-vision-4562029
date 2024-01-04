@@ -9,7 +9,7 @@ with open("refrigerator.png", "rb") as f:
     file_content = f.read()
     base64_image = base64.b64encode(file_content).decode("utf-8")
 
-PROMPT = """"""
+PROMPT = """Which of the following items are missing from this grocery list? Soy Milk, Chocolate Pudding, Apples."""
 
 response = client.chat.completions.create(
     model="gpt-4-vision-preview",
