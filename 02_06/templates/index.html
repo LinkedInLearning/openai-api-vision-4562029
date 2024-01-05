@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Grocery Check</title>
+
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --background-color: #ecf0f1;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #response {
+            margin-top: 20px;
+            border: 1px solid var(--secondary-color);
+            padding: 10px;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: 100vh;
+        }
+
+        #preview {
+            display: none;
+            margin-top: 20px;
+            border: 1px solid var(--primary-color);
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                flex-direction: row;
+                justify-content: space-around;
+            }
+
+            #response,
+            form {
+                width: 45%;
+            }
+        }
+
+        input[type="submit"] {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        input[type="submit"]:active {
+            background-color: var(--secondary-color);
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+
+        input[type="file"] {
+            opacity: 0;
+            position: absolute;
+            z-index: -1;
+        }
+
+        label[for="fileInput"] {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        label[for="fileInput"]:hover {
+            background-color: var(--secondary-color);
+        }
+
+        label[for="fileInput"]:active {
+            background-color: var(--secondary-color);
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+
+        #preview {
+            max-width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: var(--secondary-color);
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+        }
+
+        .bottom-nav input[type="submit"] {
+            margin: 0 10px;
+        }
+
+
+        #response {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* transparent background */
+            /* color: same as buttons; */
+            color: #3498db;
+        }
+
+        #scan {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: rgba(52, 152, 219, 0.5);
+            animation: scan 3s linear infinite;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.5), 0 0 20px rgba(52, 152, 219, 0.5), 0 0 30px rgba(52, 152, 219, 0.5), 0 0 40px rgba(52, 152, 219, 0.5);
+        }
+
+        @keyframes scan {
+
+            0%,
+            100% {
+                top: 0;
+            }
+
+            40% {
+                top: calc(100% - 10px);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: translateY(-100%);
+            }
+
+            60% {
+                transform: translateY(10%);
+            }
+
+            80% {
+                transform: translateY(-5%);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        #items {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            padding: 20px;
+            background: #fefabc;
+            border: 1px solid #ffed58;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        header {
+            background-color: #3498db;
+            color: #ffffff;
+            padding: 5px;
+            text-align: center;
+            font-size: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            margin-bottom: 5px;
+            animation: bounceIn 1s linear;
+        }
+
+        .chip {
+            display: inline-flex;
+            justify-content: space-between;
+            padding: 8px 10px;
+            background-color: #2196F3;
+            border-radius: 16px;
+            font-size: 14px;
+            color: #ffffff;
+            margin: 5px;
+        }
+
+        .chip button {
+            background: none;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .chip:hover {
+            background-color: #1e88e5;
+        }
+
+        .chip button:hover {
+            color: #f5f5f5;
+        }
+
+        #grocery-input {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .add-button {
+            background-color: #4CAF50;
+            /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        #grocery-list {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Grocery Check</h1>
+    </header>
+    <div class="container">
+        <div id="grocery-items">
+            <div id="grocery-list"></div>
+            <input type="text" id="grocery-input" placeholder="Enter grocery item">
+            <button onclick="addItem()" class="add-button">Add</button>
+        </div>
+        
+        <div class="image-overlay">
+            <img id="preview" alt="Preview" />
+            <div id="response" style="display: none;"></div>
+            <ul id="items" style="display: none;">
+            </ul>
+        </div>
+            <div id="scan" style="display: none;"></div>
+        
+    </div>
+    </div>
+    <nav class="bottom-nav">
+        <form onsubmit="submitForm(event)">
+            <input type="file" id="fileInput" required onchange="previewFile()">
+            <label for="fileInput">Choose a photo</label>
+            <span id="file-name"></span>
+            <input type="submit" value="Upload">
+        </form>
+    </nav>
+    <script>
+        function submitForm(event) {
+            const scanEl = document.getElementById('scan');
+            const responseEl = document.getElementById('response');
+            scanEl.style.display = 'block';
+            response.style.display = 'block';
+            responseEl.style.height = document.body.scrollHeight + 'px';
+            event.preventDefault();
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('userItems', JSON.stringify(groceryItems));
+
+            fetch('/vision', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.text())
+                .then(data => {
+                    const scanEl = document.getElementById('scan');
+                    scanEl.style.display = 'none';
+                    const responseEl = document.getElementById('response');
+                    const listEl = document.getElementById('items');
+                    const listItems = JSON.parse(data).map(item => {
+                        return `<li>${item}</li>`;
+                    }).join('');
+                    listEl.innerHTML = listItems;
+                    listEl.style.display = 'block';
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    document.getElementById('response').innerText = 'Error: ' + error;
+                });
+        }
+        const groceryItems = [];
+        function previewFile() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            const fileURL = URL.createObjectURL(file);
+            const previewImg = document.getElementById('preview');
+            previewImg.src = fileURL;
+            previewImg.style.display = 'block';
+            const responseEl = document.getElementById('response');
+            responseEl.style.display = 'none';
+            console.log(responseEl.style.display)
+
+        }
+        function addItem() {
+            const input = document.getElementById('grocery-input');
+            groceryItems.push(input.value);
+
+            const list = document.getElementById('grocery-list');
+            const listItem = document.createElement('span');
+            listItem.className = 'chip';
+            listItem.textContent = input.value;
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'X';
+            deleteButton.onclick = function () {
+                deleteItem(listItem, input.value);
+            };
+
+            listItem.appendChild(deleteButton);
+            list.appendChild(listItem);
+
+            input.value = '';
+        }
+
+        function deleteItem(listItem, item) {
+            const index = groceryItems.indexOf(item);
+            if (index > -1) {
+                groceryItems.splice(index, 1);
+            }
+            listItem.remove();
+        }
+        document.addEventListener('click', function (event) {
+            const itemsElement = document.querySelector('#items');
+            const responseElement = document.querySelector('#response');
+            const isClickInside = itemsElement.contains(event.target);
+
+            if (!isClickInside) {
+                responseElement.style.display = 'none';
+                itemsElement.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>
