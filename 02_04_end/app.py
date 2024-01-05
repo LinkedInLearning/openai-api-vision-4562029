@@ -24,9 +24,9 @@ def vision():
     item_list = json.loads(request.form.get("userItems", "[]"))
     if not item_list:
         return jsonify(
-            ["Please enter items that are supposed to be in the refrigirator"]
+            ["Please enter items that are supposed to be in the refrigerator"]
         )
-    prompt = f"""Which of the following grocery items are not present. Soy Milk, Chocolate Pudding, Apples. Response should be a list of items that are missing ["missing item1", "missing item 2", "missing item3"] if everythin is there, response should be ["mothing missing"]"""
+    prompt = f"""Which of the following grocery items are missing? Soy milk, chocolate pudding, apples. Response should be a list of items that are missing. ["missing item1", "missing item2", "missing item3"]"""
     print(prompt)
     file_content = file.read()
     base64_image = base64.b64encode(file_content).decode("utf-8")

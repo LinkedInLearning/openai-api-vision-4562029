@@ -5,11 +5,11 @@ from openai import OpenAI
 client = OpenAI()
 
 
-with open("refrigirator.png", "rb") as f:
+with open("refrigerator.png", "rb") as f:
     file_content = f.read()
     base64_image = base64.b64encode(file_content).decode("utf-8")
 
-PROMPT = """Which of the following grocery items are not present. Soy Milk, Chocolate Pudding, Apples. Response should be a list of items that are missing ["missing item1", "missing item 2", "missing item3"] if everythin is there, response should be ["mothing missing"]"""
+PROMPT = """Which of the following grocery items are missing? Soy milk, chocolate pudding, apples. Response should be a list of items that are missing. ["missing item1", "missing item2", "missing item3"]"""
 
 response = client.chat.completions.create(
     model="gpt-4-vision-preview",
